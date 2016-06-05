@@ -9,4 +9,18 @@
         <item name="android:textSize">@dimen/uiTextSize</item>
     </style>
 
+    <style name="AppTheme.BlackPlayer" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorControlHighlight">@color/colorBlackPlayerLight</item>
+        <item name="colorButtonNormal">@color/colorBlackPlayer</item>
+        <item name="android:textColor">@color/colorWhitePlayer</item>
+    </style>
+
+    <style name="AppTheme.WhitePlayer" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorControlHighlight">@color/colorWhitePlayerLight</item>
+        <item name="colorButtonNormal">@color/colorWhitePlayer</item>
+        <item name="android:textColor">@color/colorBlackPlayer</item>
+    </style>
+
 </resources>

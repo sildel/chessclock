@@ -36,6 +36,22 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Log.d("GameActivity", "onCreate - > GameActivity");
 
+        Button button = (Button) findViewById(R.id.buttonBlack);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePlay(v);
+            }
+        });
+
+        button = (Button) findViewById(R.id.buttonWhite);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePlay(v);
+            }
+        });
+
         handler = new Handler();
         Intent intent = getIntent();
         String initTime = (String) intent.getExtras().get(MenuActivity.EXTRA_INIT_TIME);
@@ -212,5 +228,3 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 }
-
-// TODO: fix buttons style
