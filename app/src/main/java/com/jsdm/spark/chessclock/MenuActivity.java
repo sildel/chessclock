@@ -1,5 +1,7 @@
 package com.jsdm.spark.chessclock;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -70,7 +72,24 @@ public class MenuActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_INIT_TIME, message);
         startActivity(intent);
     }
-}
 
-// TODO: add dialog before finish
-// TODO: fix buttons style
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.sure).setMessage(R.string.configuration_lost).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishGame();
+            }
+        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).create().show();
+    }
+
+    public void finishGame() {
+        super.onBackPressed();
+    }
+}

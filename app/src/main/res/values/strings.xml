@@ -3,4 +3,9 @@
     <string name="buttonOkText">OK</string>
     <string name="defaultTime">10:00</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="sure">Are you Sure?</string>
+    <string name="game_lost">All game process will be lost.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="configuration_lost">All configuration for the game will be lost.</string>
 </resources>

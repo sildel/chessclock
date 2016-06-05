@@ -1,13 +1,16 @@
 package com.jsdm.spark.chessclock;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,13 +28,13 @@ public class GameActivity extends AppCompatActivity {
     boolean whitePlaying;
     boolean endedGame;
     Handler handler;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-//        Toast toast = Toast.makeText(this, "onCreate - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("GameActivity", "onCreate - > GameActivity");
 
         handler = new Handler();
         Intent intent = getIntent();
@@ -74,15 +77,13 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        Toast toast = Toast.makeText(this, "onStart - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("Game Activity", "onStart - > GameActivity");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        Toast toast = Toast.makeText(this, "onResume - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("Game Activity", "onResume - > GameActivity");
     }
 
     @Override
@@ -96,22 +97,19 @@ public class GameActivity extends AppCompatActivity {
                 timerTick();
             }
         }, 1000, 1000);
-//        Toast toast = Toast.makeText(this, "onRestart - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("Game Activity", "onRestart - > GameActivity");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        Toast toast = Toast.makeText(this, "onPause - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("Game Activity", "onPause - > GameActivity");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        Toast toast = Toast.makeText(this, "onStop - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("Game Activity", "onStop - > GameActivity");
         if (timer != null) {
             timer.cancel();
             timer.purge();
@@ -121,8 +119,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        Toast toast = Toast.makeText(this, "onDestroy - > GameActivity", Toast.LENGTH_SHORT);
-//        toast.show();
+        Log.d("Game Activity", "onDestroy - > GameActivity");
     }
 
     private void checkEndGame(boolean whitePlaying) {
@@ -131,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(GAME_OVER);
             builder.setMessage((whitePlaying ? BLACK_PLAYER : WHITE_PLAYER) + PLAYER_WINS);
-            builder.setNeutralButton("Ok", null);
+            builder.setNeutralButton(R.string.ok, null);
             AlertDialog dialog = builder.create();
             playSound(R.raw.over);
             dialog.show();
@@ -139,7 +136,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void playSound(int resource) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, resource);
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+        mediaPlayer = MediaPlayer.create(this, resource);
         mediaPlayer.start();
     }
 
@@ -190,6 +191,26 @@ public class GameActivity extends AppCompatActivity {
         playSound(R.raw.swap);
         whitePlaying = view.getId() != R.id.buttonWhite;
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.sure).setMessage(R.string.game_lost).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishGame();
+            }
+        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).create().show();
+    }
+
+    public void finishGame() {
+        super.onBackPressed();
+    }
 }
 
-// TODO: add dialog before finish
+// TODO: fix buttons style

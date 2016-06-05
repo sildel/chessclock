@@ -26,6 +26,4 @@
         android:onClick="makePlay"
         android:textColor="#ff000000"
         android:background="#ffffffff" />
-
-
 </LinearLayout>
